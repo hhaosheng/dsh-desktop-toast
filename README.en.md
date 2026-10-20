@@ -35,7 +35,7 @@ Or use the DSH desktop app: sidebar → Plugins → install `dsh-desktop-toast`.
 
 ## Configuration
 
-Edit it in Settings → Plugins → Desktop Toast, or set `config` on the row in the profile's `cordis.patch.yml`:
+Override `config` on the row in the profile's `cordis.patch.yml` (restart DSH to apply):
 
 ```yaml
 - id: desktop-toast
@@ -55,6 +55,8 @@ Edit it in Settings → Plugins → Desktop Toast, or set `config` on the row in
 | `interruptText` | `任务中断 · 需要你处理` | interrupted body text |
 | `doneText` | `任务完成` | finished body text |
 | `appId` | `com.deepseek.dsh` | Windows AUMID; defaults to reusing DSH's own identity |
+
+**Why is there no form in Settings?** This `Config` only validates and supplies defaults; the DSH Plugins page does not render schema-driven forms. A bundle's own configuration area (`plugins.bundle.config`) is filled by the bundle's own web-side code, and this is a host-only plugin — so configuration goes through `cordis.patch.yml`.
 
 ## Platforms
 

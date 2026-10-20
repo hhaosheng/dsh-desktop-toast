@@ -24,8 +24,9 @@ const ASK_TOOLS = new Set(['ask_user_question', 'exit_plan_mode'])
 const INTERRUPT_REASONS = new Set(['blocked', 'error', 'max-tokens'])
 
 /**
- * 可调项。schema 会出现在 DSH 设置页里，也能写进 insert 行的 `config:` 下；
- * 插件内部会再校验一次，所以不写 config 也能跑。
+ * 可调项：负责校验与默认值，不写 `config` 也能跑。
+ * 用户改法是在 profile 的 `cordis.patch.yml` 里按行 id 覆盖 `config`；
+ * DSH 设置页不会把这份 schema 自动渲染成表单（那是插件自带 client 半边的活）。
  */
 export const Config = Schema.object({
   onInterrupt: Schema.boolean()

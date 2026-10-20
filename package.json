@@ -1,6 +1,6 @@
 {
   "name": "dsh-desktop-toast",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DeepSeek Harness 桌面通知：任务中断（等你审批/回答）与任务完成时弹出系统通知。",
   "type": "module",
   "main": "index.js",

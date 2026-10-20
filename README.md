@@ -36,7 +36,7 @@ dsh plugin --profile desktop add D:\code\dsh-notify\dsh-desktop-toast
 
 ## 配置
 
-在「设置 → 插件 → 桌面通知」里改，或直接写 profile 的 `cordis.patch.yml` 中该行的 `config`：
+在 profile 的 `cordis.patch.yml` 里按行 id 覆盖 `config`（改完重启 DSH 生效）：
 
 ```yaml
 - id: desktop-toast
@@ -56,6 +56,8 @@ dsh plugin --profile desktop add D:\code\dsh-notify\dsh-desktop-toast
 | `interruptText` | `任务中断 · 需要你处理` | 中断通知正文 |
 | `doneText` | `任务完成` | 完成通知正文 |
 | `appId` | `com.deepseek.dsh` | Windows 通知的 AUMID，默认复用 DSH 自己的身份 |
+
+**为什么设置页没有表单？** 这份 `Config` 只负责校验和默认值；DSH 的插件页不会按 schema 自动生成表单，bundle 自己的配置区（`plugins.bundle.config`）要插件自带 Web 端代码去填。本插件是纯宿主插件，所以配置走 `cordis.patch.yml`。
 
 ## 平台
 

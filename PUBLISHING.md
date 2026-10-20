@@ -18,7 +18,7 @@ npm pack --dry-run     # 12 个文件，node_modules / test 不在里面
 dsh plugin --profile desktop add D:\code\dsh-notify\dsh-desktop-toast
 ```
 
-重启 DSH 桌面端，随便发一条消息，应看到「任务完成」弹窗；让它问个问题，应看到「任务中断 · 需要你处理」。设置 → 插件里应出现「桌面通知」，配置项能改。
+重启 DSH 桌面端，随便发一条消息，应看到「任务完成」弹窗；让它问个问题，应看到「任务中断 · 需要你处理」。设置 → 插件里应出现「桌面通知」及其描述（配置项不在页面里改，见 README「配置」）。
 
 装坏了：
 
