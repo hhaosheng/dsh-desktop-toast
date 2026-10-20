@@ -1,0 +1,14 @@
+# dsh-desktop-toast 的 bundle 层
+#
+# profile 的 `dsh.profile.bundles` 里出现 `dsh-desktop-toast` 时自动生效
+# （官方安装方式：dsh plugin --profile <name> add dsh-desktop-toast）。
+#
+# 也可以不装成 bundle：把下面 insert 里的两行直接抄进 profile 自己的
+# cordis.patch.yml，id 保持唯一即可。
+#
+# 双重挂载保护：聚合 bundle 或手工行已经用别的 id 挂过同一个包时，这一行让位，
+# 免得同一个包弹两遍。`ctx.loader.entries()` 在处理本行时只看得见排在前面的行。
+- insert:
+    - id: desktop-toast
+      name: dsh-desktop-toast
+      disabled: !!js "[...ctx.loader.entries()].some((e) => e.options.name === 'dsh-desktop-toast' && e.options.id !== 'desktop-toast' && !e.disabled)"
