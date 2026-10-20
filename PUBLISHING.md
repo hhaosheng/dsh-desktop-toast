@@ -9,7 +9,7 @@ cd D:\code\dsh-notify\dsh-desktop-toast
 npm install            # 装 @deepseek-ai/schemastery + cosmokit（仅测试用）
 npm test               # 24 个用例：事件分类 / 去重 / 静默期 / toast XML
 node --check index.js
-npm pack --dry-run     # 10 个文件，node_modules 不在里面
+npm pack --dry-run     # 12 个文件，node_modules / test 不在里面
 ```
 
 ## 2. 在自己机器上真装一次
@@ -26,29 +26,36 @@ dsh plugin --profile desktop add D:\code\dsh-notify\dsh-desktop-toast
 dsh plugin --profile desktop remove dsh-desktop-toast
 ```
 
-## 3. 补 published 元信息
+## 3. 发布元信息
 
-`package.json` 里这三样发布前必须填真（现在留空，因为仓库地址还没定）：
+`repository` / `homepage` / `bugs` / `author` / `license` / `icon` / `dsh.bundle.patch` / `engines.node` 都已填好，配着 GitHub 仓库 `hhaosheng/dsh-desktop-toast` 一致；换仓库地址时要同步改这几处，否则 DSH 的「已安装」列表会链到旧地址。
 
-```json
-{
-  "repository": { "type": "git", "url": "git+https://github.com/<你>/<repo>.git" },
-  "homepage": "https://github.com/<你>/<repo>#readme",
-  "author": "<你的名字> <邮箱>"
-}
-```
-
-顺手把版本号语义化：首版 `0.1.0`；之后改行为 `0.2.0`，只修 bug `0.1.1`，改 `Config` 键名算破坏性变更 → 主版本。
+版本号语义化：首版 `0.1.0`；之后改行为 `0.2.0`，只修 bug `0.1.1`，改 `Config` 键名算破坏性变更 → 主版本。
 
 ## 4. 发到 npm
 
+**registry 必须显式指定。** 本机 `~/.npmrc` 默认指向 `registry.npmmirror.com`（只读镜像，发不上去），所以每条发布命令都要带 `--registry https://registry.npmjs.org/`。
+
+**账号开了 2FA（`auth-and-writes`）**，命令行发布需要一次性验证码。两种办法：
+
+- 临时：`npm publish --registry https://registry.npmjs.org/ --access public --otp=<6 位码>`
+- 长期（推荐）：在 <https://www.npmjs.com/settings/huanghaosheng/tokens> 建一个 **Granular Access Token**，权限 *Read and write*、范围 *All packages*、勾选 **bypass 2FA**、不设 IP 白名单。发布时：
+
 ```powershell
-npm login                     # 或 npm whoami 确认已登录
-npm publish --access public   # publishConfig 里已写 access: public
-npm view dsh-desktop-toast version
+cd D:\code\dsh-notify\dsh-desktop-toast
+Set-Content -NoNewline .npmrc '//registry.npmjs.org/:_authToken=npm_你的token'
+npm publish --registry https://registry.npmjs.org/ --userconfig .npmrc --access public
 ```
 
-前提：`dsh-desktop-toast` 这个包名在 npm 上还空着（2026-10 查过是空的）。被占就改名，别硬发——DSH 市场按包名装。
+`.npmrc` 已在 `.gitignore` 里，不会进仓库；它也不在 `files` 列表里，不会进发布包。token 过期就重签一个。
+
+发布后核对：
+
+```powershell
+npm view dsh-desktop-toast version dist.tarball --registry https://registry.npmjs.org/
+```
+
+预期 `0.1.0` 和 `https://registry.npmjs.org/dsh-desktop-toast/-/dsh-desktop-toast-0.1.0.tgz`。
 
 ## 5. 进插件市场（awesome-dsh-plugin）
 
