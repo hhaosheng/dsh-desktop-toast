@@ -2,6 +2,14 @@
 
 遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与语义化版本。
 
+## 0.1.2
+
+只有元数据修正，运行时行为与 0.1.1 完全一致。
+
+### 修正
+
+- 去掉 `peerDependencies` 里的 `@deepseek-ai/dsh-session`：`index.js` 从未 import 它，这条声明只是装饰。更实际的问题是它的范围 `>=0.1.5-rc.1` 在 node-semver 的普通解析下匹配不到预发布版本（例如 `0.2.1-rc.2`：范围里没有落在该 `major.minor.patch` 元组上、自身带预发布标签的比较符），用户 `npm install` 时会看到 `ERESOLVE` 警告。去掉后这个插件不再声明任何 DSH 版本门槛。
+
 ## 0.1.1
 
 只有文档与注释修正，运行时行为与 0.1.0 完全一致。
